@@ -1,0 +1,67 @@
+Dear Professor,
+
+I found few bugs in my Knock-Knock program which I attempted to fix and made the program run succesfully. Please find the following error and how i fixed it:
+
+1.When getting users response for how many jokes to tell, my old program accepts negative number of jokes (i.e., -1) and keeps running without printing that the response should be within the range.
+While validating the users response I missed to add a condition in if statement that it should not accept a negative number.So, i fixed it by adding a condition like below:
+
+#Validating users response for number of jokes
+if totaljokes>len(jokelist) or totaljokes<=0:
+    print(f"The number must be in the range: 1 to {len(jokelist)}")
+    totaljokes=int(input("\nHow many jokes you want me to tell? "))
+
+2.While giving a wrong response.For example, when it says quiche and i give response as quiche it says "The correct response is quiche who?" only for the first time and doesn't correct for the second time if given a wrong response.
+
+The following is my old program:
+
+  #Running through while to check for the response variants from the user
+    while True:
+        print(prompt)
+        response= input()
+  #Checking for response variant with case sensitive and punctuation agnostic
+        if response.strip("?!""'',-.").lower() in responses:
+            break
+        else:
+            #Suggesting right response if the response variant is not matched
+            print(f"The Correct response is {suggest}\nTry Again")
+            print(prompt)
+            response= input()
+            break
+
+Here, I am getting the response  from the user inside the else part which stops validating the second response from the user beacause it won't check the if condition above. So I removed the three statements inside the else part and fixed the error.
+The following is the new program:
+
+  #Running through while to check for the response variants from the user
+    while True:
+        print(prompt)
+        response= input()
+  #Checking for response variant with case sensitive and punctuation agnostic
+        if response.strip("?!""'',-.").lower() in responses:
+            break
+        else:
+            #Suggesting right response if the response variant is not matched
+            print(f"The Correct response is {suggest}\nTry Again")
+
+Now the above program validates the response each time with the if condition.
+
+3.If i give a wrong response which is not in the list of responses, it says "The correct response is.." 
+But if the wrong response is already a part of the list it does not correct you and proceeds giving the joke.
+
+For example,
+knock knock 
+who's there
+quiche
+leon who (which is in the list)
+Can I have a hug and a quiche? 
+
+Here I am supposed to give Quiche who. But the program ran for a wrong response which is in the list)
+
+In my old program i had a seperate list for jokes which has all the other jokes and responses which i now removed it and made sure to validate only the joke which was prompted during the user interaction.
+The following is the change i made to the parameters while calling the function:
+
+for x in  (jokelist[:totaljokes]):
+    #using the function prompt response for responses 
+    promptresponse('\nKnock-Knock',resp_list1,"'who's there?'\n")
+    promptresponse(f'{x[0]}',[f'{x[0]} who?'.strip("?!""'',-.").lower()],f"'{x[0]} who?'\n")
+    print(f"{x[1]}\n{'-'*40}")
+print("\nThank you Play Again")
